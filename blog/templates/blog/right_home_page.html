@@ -1,0 +1,16 @@
+{% load el_pagination_tags %}
+{% lazy_paginate right_side_list using 'right_side_list_page' %}
+
+
+	
+{% for items in right_side_list %}
+	<li class="list-group-item">
+		<div>
+			<a href="{% url 'user_page' username=items.username %}">{{items.first_name}}&nbsp;{{items.last_name}}</a>
+		</div>
+
+	</li>
+{% endfor %}
+
+
+{% show_more "<div class='text-center' style='font-weight:bold;'><h4>Load more TimeDewers</h4></div>" "<div class='text-center' style='font-weight:bold;'><h4>Loading... Please Wait</h4></div>" "cen" %}

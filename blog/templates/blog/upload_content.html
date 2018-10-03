@@ -1,0 +1,90 @@
+{% extends 'blog/form_base.html' %}
+
+{% block only_form_fields %}
+{{ content_form.non_field_errors }}
+{{ image_form.non_field_errors }}
+{{ video_form.non_field_errors }}
+  
+	  <div class="form-group">
+
+	  	{{ content_form.topic.errors }}
+
+	    <label for="{{ content_form.topic.id_for_label }}" class="col-sm-2 control-label">Topic</label>
+
+	    <div class="col-sm-10">
+	      {{content_form.topic}}
+	      <br>
+	      <small class="pull-right"><a href="{% url 'add_topic' %}">**&nbsp;Create A New Topic</a></small>
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+
+	  	{{ content_form.title.errors }}
+
+	    <label for="{{ content_form.title.id_for_label }}" class="col-sm-2 control-label">Title</label>
+
+	    <div class="col-sm-10">
+	      {{content_form.title}}
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+	  	{{ content_form.thought.errors }}
+
+	    <label for="{{ content_form.thought.id_for_label }}" class="col-sm-2 control-label">Content</label>
+	    <div class="col-sm-10">
+	    	<small class="text-muted text-center">Start a new paragraph by pressing Enter twice</small>
+	      {{content_form.thought}}
+	      <small class="text-muted pull-right">Pull the right bottom of the box, to increase the size</small>
+
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+
+	  	{{ content_form.allow_comments.errors }}
+
+	    <label for="{{ content_form.allow_comments.id_for_label }}" class="col-sm-2 control-label">Allow Comment?</label>
+
+	    <div class="col-sm-10">
+	      {{content_form.allow_comments}}
+	    </div>
+
+	  </div>
+
+	  {% if image_form %}
+	  <div class="form-group">
+	  	{{ image_form.image.errors }}
+
+	    <label for="{{ image_form.image.id_for_label }}" class="col-sm-2 control-label">Image</label>
+	    <div class="col-sm-10">
+	      {{image_form.image}}
+	      <small class="text-muted">Optional***<br>Image must be .jpeg, .jpg, .png<br>Image must be below 3 MB</small>
+
+	    </div>
+
+	  </div>
+	  {% endif %}
+	  <div class="form-group">
+
+	  	{{ content_form.video.errors }}
+
+	    <label for="{{ content_form.video.id_for_label }}" class="col-sm-2 control-label">Video</label>
+
+	    <div class="col-sm-10">
+	      {{content_form.video}}
+	      <small class="text-muted">Optional***<br>Only those videos uploaded to TimeDew's youtube channel are shown</small>
+	    </div>
+
+	  </div>
+
+
+
+		
+{% endblock %}
+
+	

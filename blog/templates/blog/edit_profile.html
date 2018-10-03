@@ -1,0 +1,56 @@
+{% extends 'blog/form_base.html' %}
+
+{% block only_form_fields %}
+
+{{ user_profile_form.non_field_errors }}
+{{ user_form.non_field_errors }}
+	  <div class="form-group">
+
+	  	{{ user_profile_form.image.errors }}
+
+	    <label for="{{ user_profile_form.image.id_for_label }}" class="col-sm-2 control-label">Image</label>
+
+	    <div class="col-sm-10">
+	      {{user_profile_form.image}}
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+
+	  	{{ user_form.first_name.errors }}
+
+	    <label for="{{ user_form.first_name.id_for_label }}" class="col-sm-2 control-label">First Name</label>
+
+	    <div class="col-sm-10">
+	      {{user_form.first_name}}
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+
+	  	{{ user_form.last_name.errors }}
+
+	    <label for="{{ user_form.last_name.id_for_label }}" class="col-sm-2 control-label">Last Name</label>
+
+	    <div class="col-sm-10">
+	      {{user_form.last_name}}
+	    </div>
+
+	  </div>
+
+	  <div class="form-group">
+	  	{{ user_profile_form.description.errors }}
+
+	    <label for="{{ user_profile_form.description.id_for_label }}" class="col-sm-2 control-label">Short Description</label>
+	    <div class="col-sm-10">
+	      {{user_profile_form.description}}
+	      <small class="text-muted pull-right">Pull the right bottom of the box, to increase the size</small>
+
+	    </div>
+
+	  </div>
+
+
+{% endblock %}

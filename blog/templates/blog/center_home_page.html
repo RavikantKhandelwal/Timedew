@@ -1,0 +1,36 @@
+{% load el_pagination_tags %}
+{% lazy_paginate final_content %}
+{% load comments %}
+{% load comments_xtd %}
+
+<ul style="list-style-type: none;padding: 0;">
+
+{% for items in final_content %}
+
+	<li>
+
+		<div>
+
+			<h3>{{items.title}}</h3>
+
+			<blockquote>
+
+			  <p>{{items.thought|truncatewords:40|urlize}}<a href="{% url 'content_view' username=items.user.username content_id=items.id page_slug=items.slug %}">See Complete</a></p>
+			  {% get_comment_count for items as comment_count %}
+			  <footer> <cite title="{{items.user.username}}">
+		  		<a href="{% url 'user_page' username=items.user.username %}">{{items.user.get_full_name}}</a></cite>, &nbsp;{{items.created}}, &nbsp;Views: {{items.views}}, &nbsp; {{comment_count}}&nbsp;comments</footer>
+				
+			</blockquote>
+		
+		</div>
+	
+	</li>
+
+
+{% empty %}
+	
+	<li><h3>Sorry, Inputs Yet&nbsp;!!!</h3></li>
+{% endfor %}
+</ul>
+
+{% show_more "<div class='text-center' style='font-weight:bold;'><h4>Load more</h4></div>" "<div class='text-center' style='font-weight:bold;'><h4>Loading... Please Wait</h4></div>" "cen" %}

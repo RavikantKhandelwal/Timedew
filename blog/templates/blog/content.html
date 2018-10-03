@@ -1,0 +1,143 @@
+{% extends 'blog/base.html' %}
+{% load comments %}
+{% load comments_xtd %}
+{% load static %}
+
+{% block content %}
+	<div class="col-md-10 col-md-offset-1 col-sm-12">
+
+		{% include "blog/center_content_homepage.html" %}
+
+        {% get_comment_count for final_content as comment_count %}
+        <div class="text-center" style="padding-top:20px">
+          <a href="{% url 'home_page' %}">View other Contents</a>
+          &nbsp;&sdot;&nbsp;
+          {{ comment_count }} comments have been posted.
+        </div>
+
+        <div>
+            <hr/>
+                <h4>Want to share your views on timedew</h4> Contact us at timedewgroup@gmail.com<hr/>
+            
+                {% if other_content %}
+                    <br>
+                    <strong>Suggestions</strong>
+            
+                    <ul class="list-group">
+            
+                        {% for items in other_content %}
+            
+                            <li class="list-group-item">
+                                
+                                <div>
+                                
+                                    <a href="{% url 'content_view' username=items.user.username content_id=items.id page_slug=items.slug %}">{{items.title}}</a><br>
+                                    <small class="text-muted">Views:- {{items.views}}</small>
+                                
+                                </div>
+
+                            </li>
+                        
+                        {% endfor %}
+                    
+                    </ul>
+                
+                {% endif %}
+
+        </div>
+        {% if final_content.allow_comments %}
+        <div class="comment">
+          <h4 class="text-center">Your comment</h4>
+          <div class="well">
+            {% render_comment_form for final_content %}
+          </div>
+        </div>
+
+        {% comment %}
+        {% if comment_count %}
+        <hr/>
+        <div class="comments">
+          {% render_comment_list for final_content %}
+        </div>
+        {% endif %}
+        {% endcomment %}
+
+            {% if comment_count %}
+            <hr/>
+            <ul class="media-list">
+              {% render_xtdcomment_tree for final_content allow_flagging allow_feedback show_feedback %}
+            </ul>
+            {% endif %}
+        {% endif %}
+
+	</div>
+
+{% endblock content %}
+
+
+{% comment %}
+{% block right_bar %}
+	
+    <div class="col-md-offset-1 col-md-3 col-sm-12 " style="border-left-style:solid;">
+    <hr/>
+        <h4>Want to share your views on timedew</h4> Contact us at timedewgroup@gmail.com<hr/>
+    
+        {% if other_content %}
+            <br>
+            <strong>Suggestions</strong>
+    
+            <ul class="list-group">
+    
+                {% for items in other_content %}
+    
+                    <li class="list-group-item">
+                        
+                        <div>
+                        
+                            <a href="{% url 'content_view' username=items.user.username content_id=items.id page_slug=items.slug %}">{{items.title}}</a><br>
+                            <small class="text-muted">Views:- {{items.views}}</small>
+                        
+                        </div>
+
+                    </li>
+                
+                {% endfor %}
+            
+            </ul>
+        
+        {% endif %}
+
+	</div>
+{% endblock %}
+
+{% endcomment %}
+
+
+{% block js %}
+    {{ block.super }}
+    
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    {#   for making the below src work we need to add in settings under Template->Option->context_processors->#}
+    {#    'django.template.context_processors.static',#}
+    {#  else it won't work#}
+   <script src="{{ STATIC_URL }}el-pagination/js/el-pagination.js"></script>
+    <script>
+        $.endlessPaginate({
+            //paginateOnScroll: true,   Removing this because it creates an unbalance error in mobile version
+            paginateOnScrollMargin: 10
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $("form").on( "submit", function( event ) {
+            //$(this).attr('disabled', true);
+            $("[name='post']").attr('disabled', true);
+            $("<p class='text-center' style='color:red'>Please Wait!</p>").insertAfter($('form'));
+        });
+
+    </script>
+
+{% endblock %}

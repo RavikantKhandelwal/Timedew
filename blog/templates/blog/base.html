@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}TimeDew{%endblock%}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Petit Formal Script' rel='stylesheet'>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4804062909607190",
+        enable_page_level_ads: true
+      });
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style type="text/css">
+
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -280px; /* the bottom margin is the negative value of the footer's height */
+        }
+
+        .footer, .push {
+            height: 280px; /* .push must be the same height as .footer */
+        }
+        .navbar {
+            -webkit-box-shadow: 0px 2px 22px 1px rgba(0,0,0,0.29);
+            -moz-box-shadow: 0px 2px 22px 1px rgba(0,0,0,0.29);
+            box-shadow: 0px 2px 22px 1px rgba(0,0,0,0.29);
+        }
+    </style>
+    <link href="{% static 'blog/css/new_navbar.css' %}" rel="stylesheet">
+    {% block css %}
+
+
+
+    {% endblock %}
+</head>
+<body>
+
+{% if topic or upload_user %}
+    
+    {% if upload_user %}
+
+    {% include "blog/navbar.html" with upload_user=upload_user %}
+
+    {% else %}
+
+    {% include "blog/navbar.html" with topic=topic %}
+
+    {% endif %}
+
+{% else %}
+
+{% include "blog/navbar.html" %}
+
+
+{% endif %}
+<div class="wrapper">
+    <div class="container-fluid mainContent" style="padding-top:30px;">
+        <div class="row">
+            {% block left_bar %}{% endblock %}
+
+
+            <!--This if loop is only for register redux to center all the contents in it-->
+            {% if 'accounts' in request.path %}
+                <div class="text-center">
+            {%endif%}
+            
+            {% block content %}
+
+            {% endblock content %}
+
+            {% if 'accounts' in request.path %}
+                </div>
+            {%endif%}
+            
+
+            {% block right_bar %}{% endblock %}
+        </div>
+    </div>
+    <div class="push"></div>
+</div>
+<br><br>
+{% block footer %}
+<div class="container-fluid footer" id="bottom" style="background:#0f93fb;; color:#ffffff">
+    <footer style="padding-top:30px; padding-bottom:50px; padding-left:10px; padding-right:10px">
+        Copyright&nbsp;<span class="glyphicon glyphicon-copyright-mark"  aria-hidden="true"></span>&nbsp;Ravikant Khandelwal, 2017
+        <br><br>
+        The content of the article(s) does not reflect the official opinion of Ravikant Khandelwal. Responsibility for the information and views expressed in the article(s) lies entirely with the author(s). 
+        <br>
+        Reproduction is authorised provided the source is acknowledged.
+        <br><br>
+        Contact us at timedewgroup@gmail.com
+    </footer>
+
+</div>
+{% endblock %}
+
+
+<script>
+
+    $('.dropdown-toggle').dropdown();
+</script>
+
+{% block js %}{% endblock %}
+</body>
+</html>

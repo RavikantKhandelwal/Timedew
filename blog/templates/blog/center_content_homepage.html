@@ -1,0 +1,57 @@
+{% load static %}
+{% load content_extra_check %}
+
+{% include 'blog/user_details.html' with upload_user=upload_user total_uploads=total_uploads request=request %}
+
+<br>
+<div>
+	<!--How are the paragraphs generated https://docs.djangoproject.com/en/1.9/ref/templates/builtins/#linebreaks-->
+	<h2 class="text-center"><strong>{{final_content.title|capfirst}}</strong></h2>
+	
+	<div class="text-center"><small>Views: &nbsp;{{view_count}}</small></div>
+	
+	{% check_image user=final_content.user content=final_content as im  %}
+	
+	{% if im %}
+		
+		<div class="text-center">
+			<img src="{{im.url}}" class="center-block img-responsive" alt="Image Content">
+		</div>
+	<br>
+	
+	{% endif %}
+	<br>
+	<div style="font-size:20px; line-height:1.7">
+		<!--https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#urlize-->
+		{% autoescape off %}
+			{{ final_content.thought|linebreaks }}  <!--We have removed urlize so need to add custom a href-->
+		{% endautoescape %}
+	</div>
+	<br>
+
+	{% if request.user.is_authenticated %}
+		{% if final_content.user == request.user %}
+			...<a href="{% url 'edit_content' content_id=final_content.id %}">Edit</a>
+		{% endif %}
+	{% endif %}
+
+
+	{% check_video user=final_content.user content=final_content as vi  %}
+	
+	{% if vi  %}
+	
+		<div class="embed-responsive embed-responsive-16by9">
+	
+		  <iframe class="embed-responsive-item" src="{{ vi }}" frameborder="0" allowfullscreen></iframe>
+	
+		</div>
+	
+	{% endif %}
+	
+	<br><br><br>
+
+</div>
+
+
+
+

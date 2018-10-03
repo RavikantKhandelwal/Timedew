@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+{% if user.is_authenticated %}
+{% block css %}
+	<style type="text/css">
+	textarea{
+		resize: vertical;
+	}
+
+	</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<div class="col-md-offset-1 col-lg-offset-1 col-md-10 col-lg-10">
+	<div class="panel panel-default">
+	  <div class="panel-body">
+		    <form class="form-horizontal" action="." method="post" enctype='multipart/form-data'>
+			    {% csrf_token %}
+			    {% block only_form_fields %}
+
+
+
+
+
+
+			    {% endblock %}
+
+
+
+			    <div class="form-group">
+				    <div class="text-center">
+				      <button type="submit" class="btn btn-default">Let's Go</button>
+				    </div>
+				  </div>
+
+
+
+			</form>
+		<div>
+	</div>
+</div>
+{% endblock %}
+{% block footer %}
+		
+{% endblock %}
+{% endif %}

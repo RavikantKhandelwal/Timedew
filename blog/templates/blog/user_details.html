@@ -1,0 +1,27 @@
+
+<a href="{% url 'user_page' username=upload_user.user.username %}">	
+	<div class="media" style="word-wrap: break-word;">
+		<div class="media-left media-middle">
+			{% if upload_user.image %}
+	      		<img class="media-object img-rounded" src="{{ upload_user.image.url }}" style="max-width:130px; max-height:130px" alt="user image">
+		    {% endif %}
+		    
+		</div>
+
+		<div class="media-body">
+			<h4 class="media-heading">{{upload_user.user.first_name}}&nbsp;{{upload_user.user.last_name}}</h4>
+			    {{upload_user.user.email}}
+			    {{upload_user.description|default:""}}</br>
+		    Total Uploads:- {{total_uploads}}
+		</div>
+	</div>
+</a>
+<div class="text-center">
+{% if request.user.is_authenticated %}
+	{% if upload_user.user == request.user %} 
+		<br>
+		&nbsp;&nbsp;&nbsp;...&nbsp;<a href="{% url 'edit_profile' %}" style="color:green">Edit</a>
+	{%endif%}
+{% endif %}
+</div>
+<hr>

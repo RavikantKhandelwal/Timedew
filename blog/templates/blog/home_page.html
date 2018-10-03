@@ -1,0 +1,89 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% if topic or upload_user %}
+
+	{% block navbar_filter_links %}
+	{{ block.super }}
+
+	{% endblock %}
+
+{% endif %}
+
+
+
+
+
+{% block content %}
+	
+	<div class="endless_page_template col-md-7 col-md-offset-1 col-sm-12">
+		{% if topic %}
+		
+			<h2><u>{{topic.topic}}</u></h2>
+		
+		{% endif %}
+		
+		{% if upload_user %}
+		
+			{% include 'blog/user_details.html' with upload_user=upload_user total_uploads=total_uploads request=request %}
+		
+		<br>
+
+		{% endif %}
+
+		{% include "blog/center_home_page.html" %}
+
+	</div>
+
+{% endblock content %}
+
+{% block right_bar %}
+
+	<div class="col-md-offset-1 col-md-3 col-sm-12 " style="border-left-style:solid; border-color:#0f93fb"><hr/>
+	<h4>Want to share your views on timedew</h4> Contact us at timedewgroup@gmail.com<hr/>
+		{% if topics %}
+			
+			<h4><strong>Topics</strong></h4>
+			
+			<ul class="list-group">
+				
+				{% for items in topics %}
+					<li class="list-group-item">
+						<div>
+							<a href="{% url 'topics_page' topic_slug=items.slug tid=items.id %}">{{items.topic}}</a>
+						</div>
+
+					</li>
+				{% endfor %}
+			</ul>
+
+		{% endif %}
+		{% comment %}
+		<h4><strong>TimeDewers</strong></h4>
+		{% if request.user.is_authenticated %}
+			<small class="text-muted">Arranged according to total views on all the contents</small>
+		{% endif %}
+		<ul class="list-group">
+		{% include "blog/right_home_page.html" %}
+		</ul>
+		{% endcomment %}
+	</div> 
+{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    {#   for making the below src work we need to add in settings under Template->Option->context_processors->#}
+    {#    'django.template.context_processors.static',#}
+    {#  else it won't work#}
+   <script src="{{ STATIC_URL }}el-pagination/js/el-pagination.js"></script>
+    <script>
+        $.endlessPaginate({
+            //paginateOnScroll: true,   Removing this because it creates an unbalance error in mobile version
+            paginateOnScrollMargin: 10
+
+        });
+    </script>   
+
+{% endblock %}
